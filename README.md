@@ -1,1 +1,5 @@
 GameOfLife
+
+By:
+Keaton
+Danie
