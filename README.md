@@ -1,8 +1,4 @@
 GameOfLife
 
 
-By:
-
-Keaton
-
-Danie
+By Keaton & Danie
