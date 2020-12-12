@@ -5,14 +5,12 @@ const cellWidth = 5;
 const cellHeight = 5;
 const WORLD_X = roundToInterval(window.innerWidth, cellWidth);
 const WORLD_Y = roundToInterval(window.innerHeight, cellHeight) - 50;
-var gameSpeed = null;
-
-console.log(WORLD_X, WORLD_Y);
 
 ctx.canvas.width = WORLD_X;
 ctx.canvas.height = WORLD_Y;
 
 var game = null;
+var gameSpeed = null;
 var gameState = false;
 var world = initWorld();
 
