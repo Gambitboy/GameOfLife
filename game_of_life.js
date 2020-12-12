@@ -12,6 +12,8 @@ ctx.canvas.height = WORLD_Y;
 var game = null;
 var gameSpeed = null;
 var gameState = false;
+var circle = false;
+var color = false;
 var world = initWorld();
 
 function roundToInterval(number, interval) {
@@ -33,12 +35,15 @@ function resetWorld(world) {
   return world;
 }
 
-function runGameOfLife() {
+function start() {
+  clearCanvas();
   clearInterval(game);
   gameState = true;
   gameSpeed = document.getElementById('game_speed').value || 100
+  circle = document.getElementById('circle').checked
+  color = document.getElementById('color').checked
   initGameOfLife();
-  gameLoop();
+  runGameOfLife();
 }
 
 function initGameOfLife() {
@@ -62,18 +67,39 @@ function setRandomWorld(x, y) {
 }
 
 function drawCell(x, y) {
-  ctx.fillStyle = 'black';
-  ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+  if (circle) {
+    ctx.beginPath();
+    ctx.fillStyle = getColor();
+    ctx.arc(x * cellWidth, y * cellHeight, 2, 0, 2 * Math.PI);
+    ctx.fill();
+  } else {
+    ctx.fillStyle = getColor();
+    ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+  }
 }
 
-function gameLoop() {
+function getColor() {
+  if (color) {
+    type = Math.floor((Math.random() * 4) + 0);
+    switch(type) {
+      case 0: return 'black';
+      case 1: return 'red';
+      case 2: return 'blue';
+      case 3: return 'green';
+    }
+  } else {
+    return 'black'
+  } 
+}
+
+function runGameOfLife() {
   game = setInterval(calculateNextDay, gameSpeed);
 }
 
 function calculateNextDay() {
   if (gameState) {
     tempWorld = initWorld();
-    ctx.clearRect(0, 0, WORLD_X, WORLD_Y);
+    clearCanvas();
     loopThroughWorld(calculateNextDayCell);
     world = tempWorld
   }
@@ -132,4 +158,8 @@ function pause() {
   } else {
     gameState = true;
   }
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, WORLD_X, WORLD_Y);
 }

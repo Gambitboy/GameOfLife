@@ -8,8 +8,10 @@
       Your browser does not support the HTML canvas tag.
     </canvas>
     <script type="text/javascript" src="./game_of_life.js"></script>
-    <input type="number" placeholder="Game Speed (100)" id="game_speed" />
-    <input type="button" onclick="runGameOfLife()" value="Start" />
+    <input type="number" placeholder="Game Speed (100ms)" id="game_speed" />
+    <input type="checkbox" id="circle" /><label for="circle">Circles</label>
+    <input type="checkbox" id="color" /><label for="color">Colors</label>
+    <input type="button" onclick="start()" value="Start" />
     <input type="button" onclick="pause()" value="Pause" />
     <input type="button" onclick="stop()" value="Stop" />
   </body>
