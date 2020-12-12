@@ -3,13 +3,22 @@ var ctx = c.getContext("2d");
 
 const cellWidth = 5;
 const cellHeight = 5;
-const WORLD_X = 1400;
-const WORLD_Y = 700;
+const WORLD_X = roundToInterval(window.innerWidth, cellWidth);
+const WORLD_Y = roundToInterval(window.innerHeight, cellHeight) - 50;
 var gameSpeed = null;
+
+console.log(WORLD_X, WORLD_Y);
+
+ctx.canvas.width = WORLD_X;
+ctx.canvas.height = WORLD_Y;
 
 var game = null;
 var gameState = false;
 var world = initWorld();
+
+function roundToInterval(number, interval) {
+  return Math.floor(number / interval) * interval;
+}
 
 function initWorld() {
   var world = new Array(WORLD_X);
@@ -66,7 +75,7 @@ function gameLoop() {
 function calculateNextDay() {
   if (gameState) {
     tempWorld = initWorld();
-    ctx.clearRect(0, 0, 1400, 700);
+    ctx.clearRect(0, 0, WORLD_X, WORLD_Y);
     loopThroughWorld(calculateNextDayCell);
     world = tempWorld
   }
