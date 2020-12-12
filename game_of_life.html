@@ -1,129 +1,16 @@
 <!DOCTYPE html>
 <html>
-<body>
-<canvas id="myCanvas" width="1400" height="700" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML canvas tag.</canvas>
-<script>
-  var c = document.getElementById("myCanvas");
-  var ctx = c.getContext("2d");
-
-  const cellWidth = 5;
-  const cellHeight = 5;
-
-  const WORLD_X = 1400;
-  const WORLD_Y = 700;
-
-  let world1 = initWorld();
-  let world2 = initWorld();
-
-  var gameState = true;
-
-  function initialize() {
-    for(var x = 0; x < WORLD_X / cellWidth; x++) {
-      for(var y = 0; y < WORLD_Y / cellHeight; y++) {
-        state = Math.floor((Math.random() * 2) + 0);
-        
-        world1[x][y] = state === 1 ? true : false;
-        if (state) {
-          ctx.fillStyle = 'black';
-          ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-        }
-      }
-    }
-  }
-
-  function runGameOfLife(){
-    initialize();
-    gameLoop();
-  }
-
-  function stop() {
-    gameState = false;
-  }
-
-  function gameLoop() {
-    setInterval(calculateNextDay, 100);
-  }
-
-  function calculateNextDay() {
-    if (gameState) {
-      world2 = initWorld();
-      ctx.clearRect(0, 0, 1400, 700);
-      for(var x = 0; x < WORLD_X / cellWidth; x++) {
-        for(var y = 0; y < WORLD_Y / cellHeight; y++) {
-          
-          var currentCell = world1[x][y];
-          var alive = findNeighbours(x, y);
-          var on = false;
-
-          if (currentCell && alive < 2) {
-            on = false;
-          } else if (currentCell && (alive == 2 || alive == 3)) {
-            on = true;
-          } else if (currentCell && alive > 3) {
-            on = false;
-          } else if (!currentCell && alive == 3) {
-            on = true;
-          }
-
-          if (on) {
-            world2[x][y] = on;
-            ctx.fillStyle = 'black';
-            ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-          }
-        }
-      }
-      world1 = world2
-    }
-  }
-
-  function findNeighbours(x, y) {
-    var neighbours = [
-      getCellState(x + 1, y),
-      getCellState(x - 1, y),
-      getCellState(x, y + 1),
-      getCellState(x, y - 1),
-      getCellState(x + 1, y + 1),
-      getCellState(x + 1, y - 1),
-      getCellState(x - 1, y + 1),
-      getCellState(x - 1, y - 1)
-    ];
-    var alive = 0;
-    for(var x = 0; x < 8; x++) {
-      if (neighbours[x]) {
-        alive++;
-      }
-    }
-    return alive;
-  }
-
-  function getCellState(x, y) {
-    if (x < 0 || y < 0 || x > WORLD_X || y > WORLD_Y) {
-       return false;
-    } else {
-      return world1[x][y];
-    }
-  }
-
-  function resetWorld(world) {
-    for(var x = 0; x < WORLD_X / cellWidth; x++) {
-      for(var y = 0; y < WORLD_Y / cellHeight; y++) {
-        world[x][y] = false;
-      }
-    }
-    return world;
-  }
-
-  function initWorld() {
-    let world = new Array(WORLD_X);
-    for (var x = 0; x < WORLD_X; x++) {
-      world[x] = new Array(WORLD_Y);
-    }
-    return resetWorld(world);
-  }
-
-  runGameOfLife();
-</script> 
-<input type="button" onclick="stop();" value="stop" />
-</body>
+  <head>
+    <title>Game of Life</title>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="1400" height="700" style="border:1px solid #d3d3d3;">
+      Your browser does not support the HTML canvas tag.
+    </canvas>
+    <script type="text/javascript" src="./game_of_life.js"></script>
+    <input type="number" placeholder="Game Speed (100)" id="game_speed" />
+    <input type="button" onclick="runGameOfLife()" value="Start" />
+    <input type="button" onclick="pause()" value="Pause" />
+    <input type="button" onclick="stop()" value="Stop" />
+  </body>
 </html>
