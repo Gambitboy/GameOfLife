@@ -3,11 +3,11 @@ var ctx = c.getContext("2d");
 
 const cellWidth = 5;
 const cellHeight = 5;
-const WORLD_X = roundToInterval(window.innerWidth, cellWidth);
-const WORLD_Y = roundToInterval(window.innerHeight, cellHeight) - 50;
 
-ctx.canvas.width = WORLD_X;
-ctx.canvas.height = WORLD_Y;
+var WORLD_X;
+var WORLD_Y;
+
+initWindow();
 
 var game = null;
 var gameSpeed = null;
@@ -15,6 +15,22 @@ var gameState = false;
 var circle = false;
 var color = false;
 var world = initWorld();
+
+function initWindow() {
+  WORLD_X = roundToInterval(window.innerWidth, cellWidth) - 15;
+  WORLD_Y = roundToInterval(window.innerHeight, cellHeight) - 50;
+
+  ctx.canvas.width = WORLD_X;
+  ctx.canvas.height = WORLD_Y;
+}
+
+window.addEventListener('resize', windowWasResized);
+
+function windowWasResized() {
+  stop();
+  initWindow();
+  initWorld();
+}
 
 function roundToInterval(number, interval) {
   return Math.floor(number / interval) * interval;
@@ -82,10 +98,10 @@ function getColor() {
   if (color) {
     type = Math.floor((Math.random() * 4) + 0);
     switch(type) {
-      case 0: return 'black';
-      case 1: return 'red';
-      case 2: return 'blue';
-      case 3: return 'green';
+      case 0: return '#2E1F27';
+      case 1: return '#3F826D';
+      case 2: return '#FB3640';
+      case 3: return '#FFBE0B';
     }
   } else {
     return 'black'
