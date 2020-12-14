@@ -104,7 +104,7 @@ function getColor() {
       case 3: return '#FFBE0B';
     }
   } else {
-    return 'black'
+    return '#000000'
   } 
 }
 
