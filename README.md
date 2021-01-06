@@ -1,4 +1,6 @@
-Game Of Life
+Game Of Life 
+
+Life Preview[https://gambitboy.github.io/GameOfLife/]
 
 
 By Keaton & Danie
